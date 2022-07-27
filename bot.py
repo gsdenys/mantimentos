@@ -31,8 +31,7 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def new(update, context):
-    command = update.message.text.replace('/', '')
-    update.message.reply_text("{command} inserido com sucesso".format(command))
+    update.message.reply_text("{update.message.text} inserido com sucesso")
 
 
 def main():
