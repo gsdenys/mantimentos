@@ -54,12 +54,12 @@ def new_item(update: Update, context: CallbackContext) -> int:
 
     if len(items) > 1:
         update.message.reply_text(
-            f"Os itens *{items}* foram inseridos com sucesso!",
+            f"Os itens *{items}* foram inseridos com sucesso,",
              parse_mode='MarkdownV2'
         )
     else:
         update.message.reply_text(
-            f"O item *{items[0]}* foi inseridos com sucesso!",
+            f"O item *{items[0]}* foi inseridos com sucesso,",
              parse_mode='MarkdownV2'
         )
         
