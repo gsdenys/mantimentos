@@ -8,6 +8,9 @@ APP = os.getenv("APP")
 
 LIST_OF_ADMINS = os.getenv("LIST_OF_ADMINS").split(",")
 
+
+logging.info(os.getenv("TELEGRAM_TOKEN"))
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -17,32 +20,48 @@ TOKEN = os.getenv("TELEGRAM_TOKEN")
 def restricted(func):
     logger.info("entrou")
     @wraps(func)
-    async def wrapped(update, context, *args, **kwargs):
+    def wrapped(update, context, *args, **kwargs):
         user_id = update.effective_user.id
         if user_id not in LIST_OF_ADMINS:
-            print(f"Unauthorized access denied for {user_id}.")
+            
+            fname = update.effective_user.first_name
+            lname = update.effective_user.last_name
+            
+            user = f"{fname} {lname}"
+            
+            logging.error(f"Authorization denied for {user} ({user_id})")
+            
+            update.message.reply_text(f"Olá {fname} {lname}!")
+            update.message.reply_text("Lamento informar, mas sou um BOT de acesso restrito e não posso falar contigo.")
+            update.message.reply_text("Ainda assim, caso queira me usar, sou de codigo aberto e podes me encontrar em:")
+            update.message.reply_text("https://github.com/gsdenys/mantimentos")
+            update.message.reply_text("Au revoir")
+            
             return
-        return await func(update, context, *args, **kwargs)
+        return func(update, context, *args, **kwargs)
     return wrapped
 
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
 @restricted
-async def start(update, context):
+def start(update, context):
     """Send a message when the command /start is issued."""
     chat_id = update.message.chat_id
     first_name =update.message.chat.first_name
-    last_name = update.message.chat.last_name
-    username = update.message.chat.username
-    print("chat_id : {} and firstname : {} lastname : {}  username {}". format(chat_id, first_name, last_name , username))
+    # last_name = update.message.chat.last_name
+    # username = update.message.chat.username
+    # print("chat_id : {} and firstname : {} lastname : {}  username {}". format(chat_id, first_name, last_name , username))
     context.bot.send_message(chat_id, 'Ciao ' + first_name + 'text')
 
 
 def help(update, context):
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+    msg = "Sou um BOT par um controle de estoque de mantimetos familiar, e vc não deve fazer parte da familia."
 
+    update.message.reply_text(msg)
+
+@restricted
 def echo(update, context):
     """Echo the user message."""
     update.message.reply_text(update.message.text)
@@ -50,7 +69,7 @@ def echo(update, context):
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
-
+@restricted
 def new(update, context):
     update.message.reply_text("Hello Command")
 
@@ -86,6 +105,8 @@ def main():
         url_path=TOKEN,
         webhook_url=APP + TOKEN
     )
+
+    # updater.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
