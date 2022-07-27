@@ -2,7 +2,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
 
-PORT = int(os.environ.get('PORT', '8443'))
+PORT = int(os.environ.get('PORT', '443'))
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -54,7 +54,7 @@ def main():
         listen="0.0.0.0",
         port=int(PORT),
         url_path=TOKEN,
-        webhook_url='https://yourherokuappname.herokuapp.com/' + TOKEN
+        webhook_url='https://mantimentos.herokuapp.com/' + TOKEN
     )
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
