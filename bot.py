@@ -30,7 +30,7 @@ def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
-def create_item(update, context):
+def new(update, context):
     command = update.message.text.replace('/', '')
     update.message.reply_text("{command} inserido com sucesso".format(command))
 
@@ -48,7 +48,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("item", create_item))
+    dp.add_handler(CommandHandler("item", new))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
