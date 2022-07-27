@@ -32,7 +32,7 @@ def error(update, context):
 
 def create_item(update, context):
     command = update.message.text.replace('/', '')
-    update.message.replay_text("{command} inserido com sucesso".format(command))
+    update.message.reply_text("{command} inserido com sucesso".format(command))
 
 
 def main():
