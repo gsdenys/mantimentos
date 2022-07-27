@@ -1,3 +1,4 @@
+from functools import wraps
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
@@ -5,18 +6,37 @@ import os
 PORT = int(os.environ.get('PORT', '443'))
 APP = os.getenv("APP")
 
+LIST_OF_ADMINS = os.getenv("LIST_OF_ADMINS").split(",")
+
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 
+def restricted(func):
+    @wraps(func)
+    async def wrapped(update, context, *args, **kwargs):
+        user_id = update.effective_user.id
+        if user_id not in LIST_OF_ADMINS:
+            print(f"Unauthorized access denied for {user_id}.")
+            return
+        return await func(update, context, *args, **kwargs)
+    return wrapped
+
+
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
-def start(update, context):
+@restricted
+async def start(update, context):
     """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+    chat_id = update.message.chat_id
+    first_name =update.message.chat.first_name
+    last_name = update.message.chat.last_name
+    username = update.message.chat.username
+    print("chat_id : {} and firstname : {} lastname : {}  username {}". format(chat_id, first_name, last_name , username))
+    context.bot.send_message(chat_id, 'Ciao ' + first_name + 'text')
+
 
 def help(update, context):
     """Send a message when the command /help is issued."""
@@ -46,8 +66,11 @@ def main():
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
+    
+    
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("new", new))
+
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
