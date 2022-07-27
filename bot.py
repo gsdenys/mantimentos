@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 
 def restricted(func):
+    logger.info("entrou")
     @wraps(func)
     async def wrapped(update, context, *args, **kwargs):
         user_id = update.effective_user.id
