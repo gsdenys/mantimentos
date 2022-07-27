@@ -31,7 +31,7 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def new(update, context):
-    update.message.reply_text("{update.message.text} inserido com sucesso")
+    update.message.reply_text("Hello Command")
 
 
 def main():
@@ -47,7 +47,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("item", new))
+    dp.add_handler(CommandHandler("new", new))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
