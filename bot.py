@@ -3,6 +3,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import os
 
 PORT = int(os.environ.get('PORT', '443'))
+APP = os.getenv("APP")
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -29,6 +30,11 @@ def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
+def create_item(update, context):
+    command = update.message.text.replace('/', '')
+    update.message.replay_text("{command} inserido com sucesso".format(command))
+
+
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
@@ -42,6 +48,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
+    dp.add_handler(CommandHandler("item", create_item))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
@@ -54,7 +61,7 @@ def main():
         listen="0.0.0.0",
         port=int(PORT),
         url_path=TOKEN,
-        webhook_url='https://mantimentos.herokuapp.com/' + TOKEN
+        webhook_url=APP + TOKEN
     )
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
