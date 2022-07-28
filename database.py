@@ -29,7 +29,7 @@ class DBHelper:
         
 
     def add_item(self, description):
-        stmt = "INSERT INTO items (description, status) VALUES (?, ?)"
+        stmt = "INSERT INTO items (description, status) VALUES (%s, %s)"
         args = (description.lower().strip(), 0)
         
         cur = self.conn.cursor()
