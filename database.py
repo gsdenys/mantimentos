@@ -19,7 +19,6 @@ class DBHelper:
         cur = self.conn.cursor()
         
         cur.execute(stmt)
-        cur.commit()
         
         cur.close()
         
@@ -31,7 +30,6 @@ class DBHelper:
         cur = self.conn.cursor()
         
         cur.execute(stmt, args)
-        cur.commit()
         
         cur.close()
 
