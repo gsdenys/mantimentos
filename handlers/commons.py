@@ -28,6 +28,7 @@ def restricted(func):
     def wrapped(update, context, *args, **kwargs):
         user_id = update.effective_user.id
         logging.error(user_id)
+        logging.error(LIST_OF_ADMINS)
         if user_id not in LIST_OF_ADMINS:
             fname = update.effective_user.first_name
             lname = update.effective_user.last_name
