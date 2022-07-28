@@ -72,7 +72,7 @@ class DBHelper:
     def update_item_by_Name(self, name, status) -> bool:
         try:
             stmt = "UPDATE items SET status = %s WHERE description = %s"
-            args = (status, name)
+            args = (status, name.lower())
             
             cur = self.conn.cursor()
             cur.execute(stmt, args)
