@@ -20,6 +20,7 @@ class DBHelper:
             cur = self.conn.cursor()
             
             cur.execute(stmt)
+            self.conn.commit()
             
             cur.close()
         except Exception as error:
@@ -34,6 +35,7 @@ class DBHelper:
         cur = self.conn.cursor()
         
         cur.execute(stmt, args)
+        self.conn.commit()
         
         cur.close()
 
