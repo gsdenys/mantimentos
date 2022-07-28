@@ -13,9 +13,7 @@ from telegram.ext import (
 from handlers.commons import cancel, restricted
 from database import DBHelper
 
-import re
-
-ALERT, SELECT, = range(2)
+ALERT, SELECT = range(2)
 
 @restricted
 def alert(update: Update, context: CallbackContext) -> int:
@@ -40,7 +38,7 @@ def alert(update: Update, context: CallbackContext) -> int:
     return ALERT
     
 @restricted
-def SELECT(update: Update, context: CallbackContext) -> int:
+def select(update: Update, context: CallbackContext) -> int:
     """Handler to insert itens to the list
 
     Args:
