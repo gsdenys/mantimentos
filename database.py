@@ -7,6 +7,7 @@ class DBHelper:
     def __init__(self, dbname=DATABASE_URL):
         self.dbname = dbname
         self.conn = psycopg2.connect(dbname)
+        
 
     def setup(self):
         stmt = '''CREATE TABLE IF NOT EXISTS items (
@@ -14,14 +15,25 @@ class DBHelper:
                     description TEXT NOT NULL UNIQUE,
                     status INTEGER NOT NULL
                 );'''
-        self.conn.execute(stmt)
-        self.conn.commit()
+                
+        cur = self.conn.cursor()
+        
+        cur.execute(stmt)
+        cur.commit()
+        
+        cur.close()
+        
 
     def add_item(self, description):
         stmt = "INSERT INTO items (description, status) VALUES (?, ?)"
         args = (description.lower().strip(), 0)
-        self.conn.execute(stmt, args)
-        self.conn.commit()
+        
+        cur = self.conn.cursor()
+        
+        cur.execute(stmt, args)
+        cur.commit()
+        
+        cur.close()
 
     # def delete_item(self, item_text):
     #     stmt = "DELETE FROM items WHERE description = (?)"
@@ -31,11 +43,22 @@ class DBHelper:
 
     def get_items(self):
         stmt = "SELECT * FROM items"
-        return [(x[0], x[1], x[2]) for x in self.conn.execute(stmt)]
+        
+        cur = self.conn.cursor()
+        
+        dt = [(x[0], x[1], x[2]) for x in cur.execute(stmt)]
+        cur.close()
+        
+        return dt
+    
     
     def get_items_by_status(self, status):
         stmt = "SELECT * FROM items WHERE status = (?)"
         args = (status,)
         
-        return [(x[0], x[1], x[2]) for x in self.conn.execute(stmt, args)]
-
+        cur = self.conn.cursor()
+        
+        dt = [(x[0], x[1], x[2]) for x in self.conn.execute(stmt, args)]
+        cur.close()
+        
+        return dt
