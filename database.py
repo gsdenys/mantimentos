@@ -1,3 +1,4 @@
+from ast import arg
 import logging
 import os
 import psycopg2
@@ -56,7 +57,6 @@ class DBHelper:
         
         return dt
     
-    
     def get_items_by_status(self, status):
         stmt = "SELECT * FROM items WHERE status = (%s)"
         args = (status,)
@@ -68,3 +68,18 @@ class DBHelper:
         cur.close()
         
         return dt
+
+    def update_item_by_Name(self, name, status) -> bool:
+        try:
+            stmt = "UPDATE items SET status = %s WHERE description = %s"
+            args = (status, name)
+            
+            cur = self.conn.cursor()
+            cur.execute(stmt, args)
+            self.conn.commit()
+            
+            cur.close()
+        except Exception as error:
+            return False
+        
+        return True

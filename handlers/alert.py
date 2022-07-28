@@ -48,8 +48,22 @@ def select(update: Update, context: CallbackContext) -> int:
     Returns:
         int: representation of step to be handlered
     """
-
-    update.message.reply_text(update.message.text)
+    FLAG_FALTA = 1
+    resp = DBHelper().update_item_by_Name(
+        update.message.text,
+        FLAG_FALTA,
+    )
+    
+    if resp:
+        update.message.reply_text(
+            "O item __{update.message.text}__ foi marcado com *EM ALERTA*",
+            parse_mode='MarkdownV2'
+        )
+    else:
+        update.message.reply_text(
+            "__{update.message.text}:__  item *NÃO ENCONTRADO*",
+            parse_mode='MarkdownV2'
+        )
     
     return ConversationHandler.END
 
