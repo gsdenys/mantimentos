@@ -58,7 +58,7 @@ class DBHelper:
     
     
     def get_items_by_status(self, status):
-        stmt = "SELECT * FROM items WHERE status = (%d)"
+        stmt = "SELECT * FROM items WHERE status = (%s)"
         args = (status,)
         
         cur = self.conn.cursor()

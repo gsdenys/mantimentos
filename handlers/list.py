@@ -40,7 +40,7 @@ def list(update: Update, context: CallbackContext) -> int:
         reply_markup=ReplyKeyboardMarkup(
             reply_keyboard, 
             one_time_keyboard=True, 
-            input_field_placeholder='Alertam, Faltando, ou Todos?'
+            input_field_placeholder='Alerta, Faltando, ou Todos?'
         ),
     )
     
