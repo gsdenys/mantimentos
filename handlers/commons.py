@@ -27,8 +27,6 @@ def restricted(func):
     @wraps(func)
     def wrapped(update, context, *args, **kwargs):
         user_id = update.effective_user.id
-        logging.error(user_id)
-        logging.error(LIST_OF_ADMINS)
         if str(user_id) not in LIST_OF_ADMINS:
             fname = update.effective_user.first_name
             lname = update.effective_user.last_name
@@ -39,7 +37,6 @@ def restricted(func):
             
             update.message.reply_text(f"Olá {fname} {lname}!")
             update.message.reply_text("Lamento informar, mas sou um BOT de acesso restrito e não posso falar contigo.")
-            update.message.reply_text("Ainda assim, caso queira me usar, sou de codigo aberto e podes me encontrar em:")
             update.message.reply_text("Au revoir")
             
             return

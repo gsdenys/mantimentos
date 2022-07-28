@@ -1,11 +1,12 @@
-import sqlite3
+import os
+import psycopg2
 
-
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
 class DBHelper:
-    def __init__(self, dbname="mantimentos.db"):
+    def __init__(self, dbname=DATABASE_URL):
         self.dbname = dbname
-        self.conn = sqlite3.connect(dbname)
+        self.conn = psycopg2.connect(dbname)
 
     def setup(self):
         stmt = '''CREATE TABLE IF NOT EXISTS items (
