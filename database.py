@@ -71,7 +71,7 @@ class DBHelper:
 
     def update_item_by_Name(self, name, status) -> bool:
         try:
-            stmt = "UPDATE items SET status = %s WHERE description = '%s'"
+            stmt = "UPDATE items SET status = %s WHERE description = %s"
             args = (status, name.lower())
             
             cur = self.conn.cursor()
