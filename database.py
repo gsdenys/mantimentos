@@ -49,8 +49,9 @@ class DBHelper:
         stmt = "SELECT * FROM items"
         
         cur = self.conn.cursor()
+        cur.execute(stmt)
         
-        dt = [(x[0], x[1], x[2]) for x in cur.execute(stmt)]
+        dt = [(x[0], x[1], x[2]) for x in cur.fetchall()]
         cur.close()
         
         return dt
