@@ -75,7 +75,7 @@ def itens(update: Update, context: CallbackContext) -> int:
 
 # Add conversation handler
 conversation = ConversationHandler(
-    entry_points=[CommandHandler('list', list)],
+    entry_points=[CommandHandler('lista', list)],
     states={
         LIST: [MessageHandler(Filters.regex('^(Todos|Alerta|Faltando)$'), itens)], 
     },

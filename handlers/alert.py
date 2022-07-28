@@ -1,3 +1,4 @@
+from select import select
 from telegram import Update
 # from telegram.ext import CallbackContext
 
@@ -14,10 +15,10 @@ from database import DBHelper
 
 import re
 
-ITEMS, MORE = range(2)
+ALERT, SELECT, = range(2)
 
 @restricted
-def new(update: Update, context: CallbackContext) -> int:
+def alert(update: Update, context: CallbackContext) -> int:
     """Command to start the insert itens flow
 
     Args:
@@ -31,15 +32,15 @@ def new(update: Update, context: CallbackContext) -> int:
     
     update.message.reply_text(
             f"Oi *{name}*, vamos lá,\n"
-            "Digite a __lista de itens__ para inserir no controle de mantimentos, "
-            "ou /cancel para cancelar",
+            "Digite o __Nome do Item__ para inserir um alerta de quantidade, ou"
+            "para cancelar digite /cancel",
             parse_mode='MarkdownV2'
     )
         
-    return ITEMS
+    return ALERT
     
 @restricted
-def new_item(update: Update, context: CallbackContext) -> int:
+def SELECT(update: Update, context: CallbackContext) -> int:
     """Handler to insert itens to the list
 
     Args:
@@ -49,32 +50,18 @@ def new_item(update: Update, context: CallbackContext) -> int:
     Returns:
         int: representation of step to be handlered
     """
-    items = re.split(',|\n|;',update.message.text)
-    
-    for item in items:
-        DBHelper().add_item(item)
 
-    if len(items) > 1:
-        update.message.reply_text(
-            f"Os itens *{items}* foram inseridos com sucesso,",
-             parse_mode='MarkdownV2'
-        )
-    else:
-        update.message.reply_text(
-            f"O item *{items[0]}* foi inseridos com sucesso,",
-             parse_mode='MarkdownV2'
-        )
-        
-    update.message.reply_text("Digite os novos itens ou /cancel para cancelar.")
+    update.message.reply_text(update.message.text)
     
-    return ITEMS
+    return ConversationHandler.END
+
 
 
 # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
 conversation = ConversationHandler(
-    entry_points=[CommandHandler('novo', new)],
+    entry_points=[CommandHandler('alerta', alert)],
     states={
-        ITEMS: [MessageHandler(Filters.text & ~Filters.command, new_item)],
+        ALERT: [MessageHandler(Filters.text & ~Filters.command, select)],
     },
     fallbacks=[CommandHandler('cancel', cancel)],
 )
