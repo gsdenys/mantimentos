@@ -11,7 +11,7 @@ class DBHelper:
 
     def setup(self):
         stmt = '''CREATE TABLE IF NOT EXISTS items (
-	                id INTEGER PRIMARY KEY AUTOINCREMENT,
+	                id SERIAL PRIMARY KEY,
                     description TEXT NOT NULL UNIQUE,
                     status INTEGER NOT NULL
                 );'''
