@@ -1,3 +1,4 @@
+import logging
 import os
 import psycopg2
 
@@ -15,12 +16,15 @@ class DBHelper:
                     description TEXT NOT NULL UNIQUE,
                     status INTEGER NOT NULL
                 );'''
-                
-        cur = self.conn.cursor()
-        
-        cur.execute(stmt)
-        
-        cur.close()
+        try:     
+            cur = self.conn.cursor()
+            
+            cur.execute(stmt)
+            
+            cur.close()
+        except Exception as error:
+            logging.error('Could not connect to the Database.')
+            logging.error('Cause: {}'.format(error))
         
 
     def add_item(self, description):
