@@ -67,8 +67,6 @@ def select(update: Update, context: CallbackContext) -> int:
     
     return ConversationHandler.END
 
-
-
 # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
 conversation = ConversationHandler(
     entry_points=[CommandHandler('alerta', alert)],
