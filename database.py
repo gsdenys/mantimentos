@@ -80,6 +80,7 @@ class DBHelper:
             
             cur.close()
         except Exception as error:
+            logging.error(error)
             return False
         
         return True
