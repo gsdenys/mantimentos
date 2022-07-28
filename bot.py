@@ -11,6 +11,7 @@ from database import DBHelper
 
 from handlers.items import conversation as items_handler
 from handlers.list import conversation as list_handler
+from handlers.alert import conversation as alert_handler
 
 # Enable logging
 logging.basicConfig(
@@ -44,6 +45,7 @@ def main() -> None:
 
     dispatcher.add_handler(items_handler)
     dispatcher.add_handler(list_handler)
+    dispatcher.add_handler(alert_handler)
 
     # Start the Bot
     # updater.start_polling()
