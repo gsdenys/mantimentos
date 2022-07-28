@@ -11,7 +11,7 @@ from telegram.ext import (
 
 import prettytable as pt
 
-from handlers.commons import cancel
+from handlers.commons import cancel, restricted
 from database import DBHelper
 
 
@@ -19,6 +19,7 @@ LIST, ALL, LACKING, WARNING = range(4)
 
 options = ['Todos', 'Alerta', 'Faltando']
 
+@restricted
 def list(update: Update, context: CallbackContext) -> int:
     """Command to start the list conversation
 
@@ -45,7 +46,7 @@ def list(update: Update, context: CallbackContext) -> int:
     
     return LIST
 
-
+@restricted
 def itens(update: Update, context: CallbackContext) -> int:
     """Stores the selected gender and asks for a photo."""
     table = pt.PrettyTable(['Item', 'Status'])

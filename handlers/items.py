@@ -9,13 +9,14 @@ from telegram.ext import (
     CallbackContext,
 )
 
-from handlers.commons import cancel
+from handlers.commons import cancel, restricted
 from database import DBHelper
 
 import re
 
 ITEMS, MORE = range(2)
 
+@restricted
 def new(update: Update, context: CallbackContext) -> int:
     """Command to start the insert itens flow
 
@@ -37,6 +38,7 @@ def new(update: Update, context: CallbackContext) -> int:
         
     return ITEMS
     
+@restricted
 def new_item(update: Update, context: CallbackContext) -> int:
     """Handler to insert itens to the list
 

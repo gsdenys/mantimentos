@@ -22,8 +22,6 @@ logger = logging.getLogger(__name__)
 PORT = int(os.environ.get('PORT', '443'))
 APP = os.getenv("APP")
 
-LIST_OF_ADMINS = os.getenv("LIST_OF_ADMINS").split(",")
-
 def start(update: Update, context: CallbackContext) -> int:
     """Starts the conversation and asks the user about their gender."""
     # reply_keyboard = [['Boy', 'Girl', 'Other']]
