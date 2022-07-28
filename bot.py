@@ -32,7 +32,6 @@ def start(update: Update, context: CallbackContext) -> int:
         'Are you a boy or a girl?'
     )
 
-
 def main() -> None:
     """Run the bot."""
     DBHelper().setup()

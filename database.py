@@ -62,8 +62,9 @@ class DBHelper:
         args = (status,)
         
         cur = self.conn.cursor()
+        cur.execute(stmt, args)
         
-        dt = [(x[0], x[1], x[2]) for x in self.conn.execute(stmt, args)]
+        dt = [(x[0], x[1], x[2]) for x in cur.fetchall()]
         cur.close()
         
         return dt
