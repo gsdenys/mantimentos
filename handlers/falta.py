@@ -67,7 +67,7 @@ def select(update: Update, context: CallbackContext) -> int:
 
 # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
 conversation = ConversationHandler(
-    entry_points=[CommandHandler('alerta', falta)],
+    entry_points=[CommandHandler('falta', falta)],
     states={
         ALERT: [MessageHandler(Filters.text & ~Filters.command, select)],
     },
