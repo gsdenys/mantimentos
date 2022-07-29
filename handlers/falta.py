@@ -59,7 +59,7 @@ def select(update: Update, context: CallbackContext) -> int:
         )
     else:
         update.message.reply_text(
-            f"__{item}:__  item *NÃO ENCONTRADO*",
+            f"O item __{item}__  *NÃO FOI ENCONTRADO*",
             parse_mode='MarkdownV2'
         )
     
