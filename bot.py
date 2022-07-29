@@ -1,4 +1,6 @@
+import imp
 import logging
+from operator import imod
 import os
 
 from telegram import Update
@@ -12,6 +14,7 @@ from database import DBHelper
 from handlers.items import conversation as items_handler
 from handlers.list import conversation as list_handler
 from handlers.alert import conversation as alert_handler
+from handlers.falta import conversation as falta_handler
 
 # Enable logging
 logging.basicConfig(
@@ -45,6 +48,7 @@ def main() -> None:
 
     dispatcher.add_handler(items_handler)
     dispatcher.add_handler(list_handler)
+    dispatcher.add_handler(alert_handler)
     dispatcher.add_handler(alert_handler)
 
     # Start the Bot
