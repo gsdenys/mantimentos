@@ -49,7 +49,7 @@ def main() -> None:
     dispatcher.add_handler(items_handler)
     dispatcher.add_handler(list_handler)
     dispatcher.add_handler(alert_handler)
-    dispatcher.add_handler(alert_handler)
+    dispatcher.add_handler(falta_handler)
 
     # Start the Bot
     # updater.start_polling()
